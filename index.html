@@ -3,44 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>L'Aube d'Or — Black Clover RP</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <title>L'Aube d'Or — AW Black CLover</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;900&family=Cinzel+Decorative:wght@700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --gold: #c9a84c;
       --gold-light: #f0d080;
+      --gold-bright: #ffe9a6;
       --gold-dark: #7a5e1a;
-      --bg-deep: #080808;
-      --bg-dark: #0f0f0f;
-      --bg-card: #141414;
-      --bg-card2: #1a1a1a;
-      --text: #d4c8a8;
-      --text-muted: #7a7060;
+      --gold-deep: #4a3a12;
+      --bg-deep: #070604;
+      --bg-dark: #0d0b07;
+      --bg-card: #14110b;
+      --bg-card2: #1b1610;
+      --text: #e4d8b6;
+      --text-muted: #8c8066;
       --border: #2a2418;
       --accent: #3a2e10;
+      --grad-gold: linear-gradient(120deg, #f0d080 0%, #ffe9a6 22%, #c9a84c 50%, #8a6d1f 72%, #f0d080 100%);
+      --shadow-gold: 0 0 40px rgba(201,168,76,0.18);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg-deep);
       color: var(--text);
       font-family: 'Crimson Text', Georgia, serif;
       font-size: 18px;
-      line-height: 1.7;
+      line-height: 1.75;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ===== PARTICULES / FOND ===== */
+    /* ===== FONDS / ATMOSPHERE ===== */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+        radial-gradient(ellipse 90% 55% at 50% -12%, rgba(255,221,140,0.12) 0%, transparent 62%),
+        radial-gradient(ellipse 50% 45% at 82% 78%, rgba(201,168,76,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 12% 35%, rgba(201,168,76,0.05) 0%, transparent 55%);
       pointer-events: none;
       z-index: 0;
+    }
+
+    /* voile / grain subtil + vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background:
+        radial-gradient(ellipse 120% 120% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+      mix-blend-mode: multiply;
+    }
+
+    /* soleil rayonnant tournant derriere le hero */
+    .sunburst {
+      position: fixed;
+      top: -38vmax;
+      left: 50%;
+      width: 100vmax;
+      height: 100vmax;
+      transform: translateX(-50%);
+      background:
+        repeating-conic-gradient(from 0deg at 50% 50%,
+          rgba(201,168,76,0.0) 0deg,
+          rgba(201,168,76,0.05) 2deg,
+          rgba(201,168,76,0.0) 5deg,
+          rgba(201,168,76,0.0) 9deg);
+      -webkit-mask: radial-gradient(circle at 50% 50%, #000 0%, transparent 58%);
+      mask: radial-gradient(circle at 50% 50%, #000 0%, transparent 58%);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+      animation: spin 120s linear infinite;
+    }
+    @keyframes spin { to { transform: translateX(-50%) rotate(360deg); } }
+
+    /* particules dorees flottantes */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .particles span {
+      position: absolute;
+      bottom: -10px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-bright), rgba(201,168,76,0));
+      opacity: 0;
+      animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+      12%  { opacity: 0.9; }
+      85%  { opacity: 0.7; }
+      100% { transform: translateY(-105vh) scale(1.1); opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sunburst, .particles span, .hero-emblem { animation: none !important; }
+      html { scroll-behavior: auto; }
     }
 
     /* ===== NAV ===== */
@@ -48,203 +123,418 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(8,8,8,0.92);
-      border-bottom: 1px solid var(--gold-dark);
-      backdrop-filter: blur(8px);
+      background: rgba(8,7,4,0.55);
+      border-bottom: 1px solid transparent;
+      backdrop-filter: blur(2px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 3rem;
-      height: 64px;
+      padding: 0 clamp(1.2rem, 4vw, 3rem);
+      height: 76px;
+      transition: height 0.4s ease, background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    body.scrolled nav {
+      height: 62px;
+      background: rgba(8,7,4,0.92);
+      border-bottom: 1px solid var(--gold-dark);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 30px rgba(0,0,0,0.5);
     }
 
     .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
       font-family: 'Cinzel', serif;
       font-weight: 900;
       font-size: 1.1rem;
       color: var(--gold);
       letter-spacing: 0.12em;
       text-decoration: none;
+      text-shadow: 0 0 18px rgba(201,168,76,0.4);
+      transition: text-shadow 0.3s;
+      white-space: nowrap;
     }
+    .nav-logo:hover { text-shadow: 0 0 26px rgba(255,233,166,0.7); }
+
+    /* logo nav (a remplacer par ton image) */
+    .nav-logo-img {
+      width: 30px; height: 30px;
+      object-fit: contain;
+      flex: none;
+      filter: drop-shadow(0 0 8px rgba(201,168,76,0.5));
+      transition: width 0.4s ease, height 0.4s ease;
+    }
+    body.scrolled .nav-logo-img { width: 25px; height: 25px; }
 
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: clamp(1rem, 2.5vw, 2.5rem);
       list-style: none;
     }
 
     .nav-links a {
+      position: relative;
       font-family: 'Cinzel', serif;
       font-size: 0.75rem;
       letter-spacing: 0.15em;
       color: var(--text-muted);
       text-decoration: none;
       text-transform: uppercase;
-      transition: color 0.2s;
+      transition: color 0.25s;
+      padding: 0.4rem 0;
     }
-
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
     .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { transform: scaleX(1); }
 
     /* ===== HERO ===== */
     .hero {
       position: relative;
+      z-index: 1;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 2rem 4rem;
+      padding: 9rem 1.5rem 5rem;
       overflow: hidden;
     }
 
     .hero-emblem {
-      font-size: 5rem;
-      margin-bottom: 1.5rem;
-      filter: drop-shadow(0 0 30px rgba(201,168,76,0.5));
-      animation: pulse 4s ease-in-out infinite;
+      font-size: clamp(3.5rem, 9vw, 5.5rem);
+      margin-bottom: 1.25rem;
+      filter: drop-shadow(0 0 30px rgba(255,221,140,0.55));
+      animation: pulse 4.5s ease-in-out infinite;
+      line-height: 1;
     }
-
+    /* logo hero (a remplacer par ton image) */
+    .hero-logo-img {
+      width: clamp(96px, 22vw, 150px);
+      height: auto;
+      display: block;
+    }
     @keyframes pulse {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(201,168,76,0.4)); }
-      50%       { filter: drop-shadow(0 0 50px rgba(201,168,76,0.8)); }
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(255,221,140,0.45)); transform: translateY(0); }
+      50%       { filter: drop-shadow(0 0 55px rgba(255,221,140,0.9)); transform: translateY(-6px); }
     }
 
     .hero-eyebrow {
       font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.35em;
-      color: var(--gold-dark);
+      font-size: clamp(0.65rem, 1.6vw, 0.8rem);
+      letter-spacing: 0.38em;
+      color: var(--gold);
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      opacity: 0.85;
     }
 
     .hero h1 {
-      font-family: 'Cinzel', serif;
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
       font-weight: 900;
-      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-size: clamp(2.8rem, 9vw, 6.5rem);
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      background: var(--grad-gold);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
       color: var(--gold);
-      line-height: 1.1;
-      text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 2px 4px rgba(0,0,0,0.8);
-      letter-spacing: 0.05em;
+      filter: drop-shadow(0 0 45px rgba(201,168,76,0.35));
+      animation: shimmer 8s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% center; }
+      50%      { background-position: 100% center; }
     }
 
     .hero-divider {
-      width: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: min(340px, 80vw);
+      margin: 2.2rem auto;
+    }
+    .hero-divider .line {
+      flex: 1;
       height: 1px;
       background: linear-gradient(to right, transparent, var(--gold), transparent);
-      margin: 2rem auto;
+    }
+    .hero-divider .gem,
+    .ornament-gem {
+      width: 9px; height: 9px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      box-shadow: 0 0 12px rgba(201,168,76,0.8);
+      flex: none;
     }
 
     .hero-subtitle {
       font-style: italic;
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto 2.5rem;
+      font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+      color: var(--text);
+      max-width: 620px;
+      margin: 0 auto 2.6rem;
+      opacity: 0.92;
     }
 
     .hero-motto {
       font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      color: var(--gold-dark);
+      font-size: clamp(0.72rem, 1.8vw, 0.9rem);
+      letter-spacing: 0.22em;
+      color: var(--gold-light);
       text-transform: uppercase;
-      border: 1px solid var(--gold-dark);
+      position: relative;
       display: inline-block;
-      padding: 0.6rem 2rem;
+      padding: 0.8rem 2.4rem;
+      background: linear-gradient(180deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+      border: 1px solid var(--gold-dark);
+      box-shadow: inset 0 0 24px rgba(201,168,76,0.08), 0 0 24px rgba(0,0,0,0.4);
+    }
+    .hero-motto::before, .hero-motto::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      border: 1px solid var(--gold);
+    }
+    .hero-motto::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .hero-motto::after  { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+    /* indicateur de defilement */
+    .scroll-cue {
+      position: absolute;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      width: 22px; height: 36px;
+      border: 1px solid var(--gold-dark);
+      border-radius: 12px;
+      opacity: 0.7;
+    }
+    .scroll-cue::after {
+      content: '';
+      position: absolute;
+      top: 7px; left: 50%;
+      width: 3px; height: 7px;
+      margin-left: -1.5px;
+      border-radius: 2px;
+      background: var(--gold);
+      animation: scrolldot 1.8s ease-in-out infinite;
+    }
+    @keyframes scrolldot {
+      0%   { opacity: 0; transform: translateY(0); }
+      40%  { opacity: 1; }
+      100% { opacity: 0; transform: translateY(12px); }
     }
 
     /* ===== SECTIONS ===== */
     section {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       max-width: 1100px;
       margin: 0 auto;
-      padding: 5rem 2rem;
+      padding: 6rem 1.5rem;
+      scroll-margin-top: 90px;
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3.8rem;
     }
 
     .section-label {
       font-family: 'Cinzel', serif;
       font-size: 0.7rem;
-      letter-spacing: 0.35em;
-      color: var(--gold-dark);
+      letter-spacing: 0.38em;
+      color: var(--gold);
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.85rem;
+      opacity: 0.75;
     }
 
     .section-title {
-      font-family: 'Cinzel', serif;
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
       font-weight: 700;
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-size: clamp(1.7rem, 4.5vw, 2.8rem);
+      background: var(--grad-gold);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
       color: var(--gold);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
     }
 
     .section-divider {
-      width: 120px;
-      height: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 180px;
+      margin: 1.4rem auto 0;
+    }
+    .section-divider .line {
+      flex: 1; height: 1px;
       background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
-      margin: 1.5rem auto 0;
     }
 
-    /* ===== SEPARATEUR SECTION ===== */
+    /* ===== SEPARATEUR ===== */
     .sep {
+      position: relative;
+      z-index: 3;
       border: none;
-      border-top: 1px solid var(--border);
+      height: 1px;
       max-width: 900px;
       margin: 0 auto;
+      background: linear-gradient(to right, transparent, var(--border) 18%, var(--gold-dark) 50%, var(--border) 82%, transparent);
     }
+    .sep::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 7px; height: 7px;
+      margin: -3.5px 0 0 -3.5px;
+      background: var(--gold-dark);
+      transform: rotate(45deg);
+    }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2,0.7,0.2,1);
+      transition-delay: var(--d, 0ms);
+    }
+    .reveal.in { opacity: 1; transform: none; }
 
     /* ===== CARDS ===== */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      gap: 1.6rem;
     }
 
     .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 2rem;
       position: relative;
-      transition: border-color 0.3s, transform 0.3s;
+      background: linear-gradient(180deg, var(--bg-card2), var(--bg-card));
+      border: 1px solid var(--border);
+      padding: 2.3rem 2rem;
+      overflow: hidden;
+      transition: border-color 0.35s, transform 0.35s, box-shadow 0.35s;
     }
-
     .card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.35s;
     }
-
-    .card:hover { border-color: var(--gold-dark); transform: translateY(-3px); }
+    /* coins ornes facon grimoire */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid transparent;
+      pointer-events: none;
+      transition: border-color 0.35s;
+      -webkit-mask:
+        linear-gradient(#000 0 0) top left / 18px 18px no-repeat,
+        linear-gradient(#000 0 0) top right / 18px 18px no-repeat,
+        linear-gradient(#000 0 0) bottom left / 18px 18px no-repeat,
+        linear-gradient(#000 0 0) bottom right / 18px 18px no-repeat;
+      mask:
+        linear-gradient(#000 0 0) top left / 18px 18px no-repeat,
+        linear-gradient(#000 0 0) top right / 18px 18px no-repeat,
+        linear-gradient(#000 0 0) bottom left / 18px 18px no-repeat,
+        linear-gradient(#000 0 0) bottom right / 18px 18px no-repeat;
+    }
+    .card:hover {
+      border-color: var(--gold-dark);
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5), var(--shadow-gold);
+    }
     .card:hover::before { opacity: 1; }
+    .card:hover::after { border-color: rgba(201,168,76,0.4); }
 
-    .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 58px; height: 58px;
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid var(--gold-dark);
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 35%, rgba(201,168,76,0.14), transparent 70%);
+      box-shadow: inset 0 0 18px rgba(201,168,76,0.12);
+    }
     .card-title {
       font-family: 'Cinzel', serif;
-      font-size: 1rem;
+      font-weight: 700;
+      font-size: 1.05rem;
       color: var(--gold);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.8rem;
       letter-spacing: 0.05em;
     }
-    .card-text { color: var(--text-muted); font-size: 0.95rem; }
+    .card-text { color: var(--text-muted); font-size: 0.96rem; }
+
+    /* ===== QUOTE ===== */
+    .quote-block {
+      position: relative;
+      border-left: 3px solid var(--gold);
+      padding: 1.8rem 2rem 1.8rem 3.2rem;
+      background: linear-gradient(120deg, rgba(201,168,76,0.05), transparent 70%), var(--bg-card);
+      margin: 0 auto 3.5rem;
+      max-width: 860px;
+      overflow: hidden;
+    }
+    .quote-block::before {
+      content: '\201C';
+      position: absolute;
+      top: -0.6rem; left: 0.7rem;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 5rem;
+      color: var(--gold-dark);
+      opacity: 0.5;
+      line-height: 1;
+    }
+    blockquote {
+      font-style: italic;
+      font-size: clamp(1.05rem, 2.3vw, 1.3rem);
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+    }
+    blockquote cite {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-style: normal;
+      letter-spacing: 0.12em;
+      opacity: 0.85;
+    }
 
     /* ===== HIERARCHIE ===== */
     .hierarchy {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      max-width: 700px;
+      max-width: 760px;
       margin: 0 auto;
     }
 
@@ -252,219 +542,184 @@
       display: flex;
       align-items: center;
       gap: 1.5rem;
-      background: var(--bg-card);
+      background: linear-gradient(120deg, var(--bg-card2), var(--bg-card));
       border: 1px solid var(--border);
-      padding: 1.25rem 1.75rem;
-      transition: border-color 0.3s;
+      padding: 1.3rem 1.8rem 1.3rem 2rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
       position: relative;
       overflow: hidden;
     }
-
     .rank-row::after {
       content: '';
       position: absolute;
       left: 0; top: 0; bottom: 0;
-      width: 3px;
+      width: 4px;
+    }
+    .rank-row:hover {
+      border-color: var(--gold-dark);
+      transform: translateX(4px);
+      box-shadow: -4px 0 24px rgba(201,168,76,0.08);
     }
 
-    .rank-1::after { background: var(--gold); }
-    .rank-2::after { background: #a0a0a0; }
-    .rank-3::after { background: #8b6914; }
-    .rank-4::after { background: var(--border); }
-    .rank-5::after { background: var(--border); }
+    .rank-1::after { background: linear-gradient(var(--gold-bright), var(--gold)); box-shadow: 0 0 16px rgba(201,168,76,0.6); }
+    .rank-2::after { background: linear-gradient(#e8e8e8, #9a9a9a); }
+    .rank-3::after { background: linear-gradient(#d8af52, #8b6914); }
+    .rank-4::after { background: linear-gradient(#9a7e3a, #5a4715); }
+    .rank-5::after { background: var(--gold-deep); }
+    .rank-6::after { background: #3c331c; }
+    .rank-7::after { background: var(--border); }
 
-    .rank-row:hover { border-color: var(--gold-dark); }
+    /* mise en avant du Capitaine */
+    .rank-1 {
+      background: linear-gradient(120deg, rgba(201,168,76,0.1), var(--bg-card) 65%);
+      border-color: var(--gold-dark);
+      box-shadow: var(--shadow-gold);
+    }
 
     .rank-badge {
       font-family: 'Cinzel', serif;
       font-size: 0.65rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      padding: 0.3rem 0.9rem;
+      padding: 0.4rem 0.9rem;
       border: 1px solid;
       white-space: nowrap;
-      min-width: 140px;
+      min-width: 144px;
       text-align: center;
     }
-
-    .rank-1 .rank-badge { color: var(--gold); border-color: var(--gold-dark); background: rgba(201,168,76,0.08); }
-    .rank-2 .rank-badge { color: #c0c0c0; border-color: #555; background: rgba(180,180,180,0.06); }
-    .rank-3 .rank-badge { color: #c8a040; border-color: #6a4f10; background: rgba(139,105,20,0.08); }
-    .rank-4 .rank-badge { color: var(--text-muted); border-color: var(--border); }
+    .rank-1 .rank-badge { color: var(--gold-bright); border-color: var(--gold); background: rgba(201,168,76,0.12); box-shadow: inset 0 0 14px rgba(201,168,76,0.18); }
+    .rank-2 .rank-badge { color: #d6d6d6; border-color: #666; background: rgba(180,180,180,0.07); }
+    .rank-3 .rank-badge { color: #dcae46; border-color: #6a4f10; background: rgba(139,105,20,0.1); }
+    .rank-4 .rank-badge { color: #b89a55; border-color: #4f3f18; }
     .rank-5 .rank-badge { color: var(--text-muted); border-color: var(--border); }
+    .rank-6 .rank-badge { color: var(--text-muted); border-color: var(--border); }
+    .rank-7 .rank-badge { color: var(--text-muted); border-color: var(--border); }
 
-    .rank-info { flex: 1; }
+    .rank-info { flex: 1; min-width: 0; }
     .rank-name {
       font-family: 'Cinzel', serif;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       color: var(--text);
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.02em;
     }
+    .rank-1 .rank-name { color: var(--gold-light); }
     .rank-desc { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
 
     .rank-holder {
-      font-size: 0.8rem;
-      color: var(--gold-dark);
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.05em;
-    }
-
-    /* ===== MAGIE ===== */
-    .magic-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-
-    .magic-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 1.5rem;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    .magic-card:hover {
-      border-color: var(--gold-dark);
-      background: var(--accent);
-    }
-
-    .magic-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-    .magic-name {
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--gold);
-      margin-bottom: 0.4rem;
+      font-family: 'Cinzel', serif;
       letter-spacing: 0.05em;
+      white-space: nowrap;
+      opacity: 0.9;
     }
-    .magic-type { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+    .rank-1 .rank-holder {
+      color: var(--bg-deep);
+      background: var(--grad-gold);
+      padding: 0.3rem 0.85rem;
+      border-radius: 2px;
+      font-weight: 600;
+      box-shadow: 0 0 18px rgba(201,168,76,0.4);
+    }
 
     /* ===== REGLES ===== */
     .rules-list {
       list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 1rem;
+      max-width: 980px;
+      margin: 0 auto;
     }
 
     .rules-list li {
+      position: relative;
       display: flex;
       align-items: flex-start;
       gap: 1rem;
-      padding: 1rem 1.25rem;
-      background: var(--bg-card);
+      padding: 1.3rem 1.4rem 1.3rem 1.4rem;
+      background: linear-gradient(180deg, var(--bg-card2), var(--bg-card));
       border: 1px solid var(--border);
       font-size: 0.95rem;
       color: var(--text-muted);
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .rules-list li:hover {
+      border-color: var(--gold-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
     }
 
     .rule-num {
-      font-family: 'Cinzel', serif;
-      color: var(--gold-dark);
-      font-size: 0.85rem;
-      min-width: 1.5rem;
-      margin-top: 0.05rem;
-    }
-
-    /* ===== QUOTE ===== */
-    .quote-block {
-      border-left: 3px solid var(--gold-dark);
-      padding: 1.5rem 2rem;
-      background: var(--bg-card);
-      margin: 2rem 0;
-    }
-
-    blockquote {
-      font-style: italic;
-      font-size: 1.2rem;
-      color: var(--text);
-    }
-
-    blockquote cite {
-      display: block;
-      margin-top: 0.75rem;
-      font-size: 0.85rem;
-      color: var(--gold-dark);
-      font-family: 'Cinzel', serif;
-      font-style: normal;
-      letter-spacing: 0.1em;
-    }
-
-    /* ===== RECRUTEMENT ===== */
-    .recruit-box {
-      background: var(--bg-card);
-      border: 1px solid var(--gold-dark);
-      padding: 3rem;
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: 700;
+      min-width: 2.2rem;
       text-align: center;
-      position: relative;
-    }
-
-    .recruit-box::before {
-      content: '';
-      position: absolute;
-      inset: 4px;
-      border: 1px solid var(--border);
-      pointer-events: none;
-    }
-
-    .recruit-title {
-      font-family: 'Cinzel', serif;
-      font-size: 1.5rem;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-
-    .recruit-text { color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; }
-
-    .btn {
-      display: inline-block;
-      font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 0.9rem 2.5rem;
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      text-decoration: none;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .btn:hover {
-      background: var(--gold);
-      color: var(--bg-deep);
+      line-height: 1.4;
+      flex: none;
+      text-shadow: 0 0 16px rgba(201,168,76,0.4);
     }
 
     /* ===== FOOTER ===== */
     footer {
+      position: relative;
+      z-index: 3;
       border-top: 1px solid var(--border);
       text-align: center;
-      padding: 2.5rem;
+      padding: 3rem 1.5rem;
       font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       letter-spacing: 0.2em;
       color: var(--text-muted);
       text-transform: uppercase;
+      background: linear-gradient(180deg, transparent, rgba(201,168,76,0.03));
     }
-
-    footer span { color: var(--gold-dark); }
+    footer p:first-child {
+      font-size: 0.85rem;
+      letter-spacing: 0.22em;
+      margin-bottom: 0.6rem;
+    }
+    footer span { color: var(--gold); }
 
     /* ===== SCROLLBAR ===== */
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: var(--bg-deep); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--gold-dark), var(--gold-deep));
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+    ::selection { background: rgba(201,168,76,0.3); color: var(--gold-bright); }
+
+    @media (max-width: 620px) {
+      .nav-links { gap: 0.9rem; }
+      .nav-links a { font-size: 0.62rem; letter-spacing: 0.1em; }
+      .rank-row { flex-wrap: wrap; gap: 0.7rem 1rem; padding: 1.1rem 1.2rem; }
+      .rank-badge { min-width: 0; }
+      .rank-holder { width: 100%; }
+    }
   </style>
 </head>
 <body>
 
+  <div class="sunburst"></div>
+  <div class="particles" aria-hidden="true"></div>
+
   <!-- NAV -->
   <nav>
-    <a href="#accueil" class="nav-logo">✦ L'Aube d'Or</a>
+    <!-- LOGO NAV : remplace le src ci-dessous par ton logo (URL d'image ou data URI) -->
+    <a href="#accueil" class="nav-logo">
+      <img class="nav-logo-img" alt="Logo L'Aube d'Or"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='none' stroke='%23c9a84c' stroke-width='3'/%3E%3Ccircle cx='50' cy='56' r='15' fill='%23c9a84c'/%3E%3Crect x='24' y='66' width='52' height='3' fill='%23c9a84c'/%3E%3Cg stroke='%23c9a84c' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='50' y1='18' x2='50' y2='27'/%3E%3Cline x1='32' y1='24' x2='37' y2='32'/%3E%3Cline x1='68' y1='24' x2='63' y2='32'/%3E%3Cline x1='22' y1='40' x2='30' y2='45'/%3E%3Cline x1='78' y1='40' x2='70' y2='45'/%3E%3C/g%3E%3C/svg%3E"/>
+      L'Aube d'Or
+    </a>
     <ul class="nav-links">
       <li><a href="#compagnie">Compagnie</a></li>
       <li><a href="#hierarchie">Hiérarchie</a></li>
-      <li><a href="#magie">Magie</a></li>
       <li><a href="#regles">Règles</a></li>
       <li><a href="#recrutement">Recrutement</a></li>
     </ul>
@@ -472,41 +727,46 @@
 
   <!-- HERO -->
   <div class="hero" id="accueil">
-    <div class="hero-emblem">🌅</div>
+    <!-- LOGO HERO : remplace le src ci-dessous par ton logo (URL d'image ou data URI) -->
+    <div class="hero-emblem">
+      <img class="hero-logo-img" alt="Logo L'Aube d'Or"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='56' fill='none' stroke='%23c9a84c' stroke-width='2'/%3E%3Ccircle cx='60' cy='60' r='50' fill='none' stroke='%237a5e1a' stroke-width='1'/%3E%3Ccircle cx='60' cy='66' r='18' fill='%23c9a84c'/%3E%3Crect x='28' y='80' width='64' height='3' fill='%23c9a84c'/%3E%3Cg stroke='%23c9a84c' stroke-width='3' stroke-linecap='round'%3E%3Cline x1='60' y1='22' x2='60' y2='33'/%3E%3Cline x1='38' y1='30' x2='44' y2='40'/%3E%3Cline x1='82' y1='30' x2='76' y2='40'/%3E%3Cline x1='26' y1='50' x2='36' y2='56'/%3E%3Cline x1='94' y1='50' x2='84' y2='56'/%3E%3C/g%3E%3C/svg%3E"/>
+    </div>
     <p class="hero-eyebrow">Compagnie de Clover</p>
     <h1>L'Aube d'Or</h1>
-    <div class="hero-divider"></div>
+    <div class="hero-divider"><span class="line"></span><span class="gem"></span><span class="line"></span></div>
     <p class="hero-subtitle">l'Aube d'Or qui éblouira Clover.</p>
     <span class="hero-motto">✦ Par la magie de piège! ✦</span>
+    <div class="scroll-cue" aria-hidden="true"></div>
   </div>
 
   <!-- COMPAGNIE -->
   <section id="compagnie">
-    <div class="section-header">
+    <div class="section-header reveal">
       <p class="section-label">À propos</p>
       <h2 class="section-title">Aube D'or</h2>
-      <div class="section-divider"></div>
+      <div class="section-divider"><span class="line"></span><span class="ornament-gem"></span><span class="line"></span></div>
     </div>
 
-    <div class="quote-block">
+    <div class="quote-block reveal">
       <blockquote>
         « La parole et d'argent mais le silence et d'or, savoir choisir ces mots et la plus grande force. »
         <cite>— Capitaine de l'Aube d'Or</cite>
       </blockquote>
     </div>
 
-    <div class="cards">
-      <div class="card">
+    <div class="cards stagger">
+      <div class="card reveal">
         <div class="card-icon">⚜️</div>
         <div class="card-title">Notre Mission</div>
         <div class="card-text">Protéger le Royaume de Clover, servir la famille royale et maintenir la paix au sein du territoire. L'Aube d'Or représente l'excellence magique et la discipline aucun écart ne sera tolérer.</div>
       </div>
-      <div class="card">
+      <div class="card reveal">
         <div class="card-icon">🌟</div>
         <div class="card-title">Nos Valeurs</div>
         <div class="card-text">Excellence, honneur, loyauté et droiture. Chaque membre de l'Aube d'Or s'engage à repousser ses limites et à porter haut les couleurs de la compagnie dans chaque mission.</div>
       </div>
-      <div class="card">
+      <div class="card reveal">
         <div class="card-icon">🏰</div>
         <div class="card-title">Vous Êtes L'Avenir</div>
         <div class="card-text">Engagé, motivé, prêt à servir vous Chevaliers-Mages êtes l'avenir de ce Royaume.</div>
@@ -518,15 +778,15 @@
 
   <!-- HIERARCHIE -->
   <section id="hierarchie">
-    <div class="section-header">
+    <div class="section-header reveal">
       <p class="section-label">Organisation</p>
       <h2 class="section-title">Hiérarchie</h2>
-      <div class="section-divider"></div>
+      <div class="section-divider"><span class="line"></span><span class="ornament-gem"></span><span class="line"></span></div>
     </div>
 
-    <div class="hierarchy">
+    <div class="hierarchy stagger">
 
-      <div class="rank-row rank-1">
+      <div class="rank-row rank-1 reveal">
         <span class="rank-badge">Capitaine</span>
         <div class="rank-info">
           <div class="rank-name">Capitaine de l'Aube d'Or</div>
@@ -535,7 +795,7 @@
         <span class="rank-holder">Miaru Rino</span>
       </div>
 
-      <div class="rank-row rank-2">
+      <div class="rank-row rank-2 reveal">
         <span class="rank-badge">Vice-Capitaine</span>
         <div class="rank-info">
           <div class="rank-name">Vice-Capitaine</div>
@@ -544,7 +804,7 @@
         <span class="rank-holder">Vacant</span>
       </div>
 
-      <div class="rank-row rank-3">
+      <div class="rank-row rank-3 reveal">
         <span class="rank-badge">Grand CM</span>
         <div class="rank-info">
           <div class="rank-name">Grand Chevalier-Mage</div>
@@ -553,7 +813,7 @@
         <span class="rank-holder">—</span>
       </div>
 
-      <div class="rank-row rank-4">
+      <div class="rank-row rank-4 reveal">
         <span class="rank-badge">Supérieur</span>
         <div class="rank-info">
           <div class="rank-name">Chevalier-Mage Supérieur</div>
@@ -562,7 +822,7 @@
         <span class="rank-holder">—</span>
       </div>
 
-      <div class="rank-row rank-4">
+      <div class="rank-row rank-4 reveal">
         <span class="rank-badge">Confirmé</span>
         <div class="rank-info">
           <div class="rank-name">Chevalier-Mage Confirmé</div>
@@ -571,7 +831,7 @@
         <span class="rank-holder">—</span>
       </div>
 
-      <div class="rank-row rank-5">
+      <div class="rank-row rank-5 reveal">
         <span class="rank-badge">1ère Classe</span>
         <div class="rank-info">
           <div class="rank-name">Chevalier-Mage 1ère Classe</div>
@@ -580,7 +840,7 @@
         <span class="rank-holder">—</span>
       </div>
 
-      <div class="rank-row rank-6">
+      <div class="rank-row rank-6 reveal">
         <span class="rank-badge">2ère Classe</span>
         <div class="rank-info">
           <div class="rank-name">Chevalier-Mage 2ère Classe</div>
@@ -589,7 +849,7 @@
         <span class="rank-holder">—</span>
       </div>
 
-      <div class="rank-row rank-7">
+      <div class="rank-row rank-7 reveal">
         <span class="rank-badge">3ère Classe</span>
         <div class="rank-info">
           <div class="rank-name">Chevalier-Mage 3ère Classe</div>
@@ -597,7 +857,7 @@
         </div>
         <span class="rank-holder">—</span>
       </div>
-      
+
     </div>
   </section>
 
@@ -605,21 +865,21 @@
 
   <!-- REGLES -->
   <section id="regles">
-    <div class="section-header">
+    <div class="section-header reveal">
       <p class="section-label">Code d'honneur</p>
       <h2 class="section-title">Règles de la Compagnie</h2>
-      <div class="section-divider"></div>
+      <div class="section-divider"><span class="line"></span><span class="ornament-gem"></span><span class="line"></span></div>
     </div>
 
-    <ul class="rules-list">
-      <li><span class="rule-num">I.</span> I. L'Excellence avant tout. Chaque Chevalier-Mage s'engage à perfectionner sa magie, son esprit et ses compétences. Les personnes qui ne fournissent pas d'effort on en veux pas.</li>
-      <li><span class="rule-num">II.</span> II. L'Honneur guide nos actes. Nos actions doivent toujours refléter la noblesse de notre compagnie. Nous agissons avec dignité, respect et intégrité vous représentez la compagnie.</li>
-      <li><span class="rule-num">III.</span> III. La Loyauté envers la Compagnie. Chaque membre doit soutenir ses frères et sœurs.</li>
-      <li><span class="rule-num">IV.</span> IV. Le Pouvoir. Nous refusons la corruption, la trahison et les abus de pouvoir. Un Chevalier de l'Aube d'Or demeure juste en toute circonstances.</li>
-      <li><span class="rule-num">V.</span> V. Le Royaume avant soi-même. La protection du Royaume de Clover et de ses habitants passe avant les intérêts personnels.</li>
-      <li><span class="rule-num">VI.</span> VI. Le Dépassement de soi. Chaque mission est une occasion de grandir. Nous ne reculons pas devant les défis et cherchons constamment à repousser nos limites.</li>
-      <li><span class="rule-num">VII.</span> VII. Porter fièrement les couleurs de l'Aube d'Or. Par nos paroles, nos actions et nos victoires, nous représentons l'héritage de l'Aube d'Or. Chaque membre est le reflet de l'honneur et du prestige de la compagnie..</li>
-      <li><span class="rule-num">I.</span> VIII. Respecter la hiérarchie en toutes circonstances. Les ordres du Capitaine et du Vice-Capitaine sont loi.</li>
+    <ul class="rules-list stagger">
+      <li class="reveal"><span class="rule-num">I.</span> I. L'Excellence avant tout. Chaque Chevalier-Mage s'engage à perfectionner sa magie, son esprit et ses compétences. Les personnes qui ne fournissent pas d'effort on en veux pas.</li>
+      <li class="reveal"><span class="rule-num">II.</span> II. L'Honneur guide nos actes. Nos actions doivent toujours refléter la noblesse de notre compagnie. Nous agissons avec dignité, respect et intégrité vous représentez la compagnie.</li>
+      <li class="reveal"><span class="rule-num">III.</span> III. La Loyauté envers la Compagnie. Chaque membre doit soutenir ses frères et sœurs.</li>
+      <li class="reveal"><span class="rule-num">IV.</span> IV. Le Pouvoir. Nous refusons la corruption, la trahison et les abus de pouvoir. Un Chevalier de l'Aube d'Or demeure juste en toute circonstances.</li>
+      <li class="reveal"><span class="rule-num">V.</span> V. Le Royaume avant soi-même. La protection du Royaume de Clover et de ses habitants passe avant les intérêts personnels.</li>
+      <li class="reveal"><span class="rule-num">VI.</span> VI. Le Dépassement de soi. Chaque mission est une occasion de grandir. Nous ne reculons pas devant les défis et cherchons constamment à repousser nos limites.</li>
+      <li class="reveal"><span class="rule-num">VII.</span> VII. Porter fièrement les couleurs de l'Aube d'Or. Par nos paroles, nos actions et nos victoires, nous représentons l'héritage de l'Aube d'Or. Chaque membre est le reflet de l'honneur et du prestige de la compagnie..</li>
+      <li class="reveal"><span class="rule-num">I.</span> VIII. Respecter la hiérarchie en toutes circonstances. Les ordres du Capitaine et du Vice-Capitaine sont loi.</li>
     </ul>
   </section>
 
@@ -630,6 +890,54 @@
     <p>✦ <span>L'Aube d'Or</span> — Compagnie de Clover ✦</p>
     <p style="margin-top:0.5rem;">AW Black Clover &nbsp;|&nbsp; FAIS PAR MIARU SA MA PRIS DES PLOMBS</p>
   </footer>
+
+  <script>
+    // particules dorees
+    (function () {
+      var pc = document.querySelector('.particles');
+      if (!pc) return;
+      var n = window.innerWidth < 700 ? 22 : 40;
+      for (var i = 0; i < n; i++) {
+        var s = document.createElement('span');
+        var size = (Math.random() * 3 + 1.5).toFixed(1);
+        s.style.left = (Math.random() * 100).toFixed(2) + '%';
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.animationDuration = (Math.random() * 14 + 11).toFixed(1) + 's';
+        s.style.animationDelay = (-Math.random() * 22).toFixed(1) + 's';
+        pc.appendChild(s);
+      }
+    })();
+
+    // nav qui se compacte au defilement
+    var onScroll = function () {
+      document.body.classList.toggle('scrolled', window.scrollY > 40);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // apparition au defilement + decalage
+    (function () {
+      document.querySelectorAll('.stagger').forEach(function (group) {
+        Array.prototype.forEach.call(group.children, function (child, i) {
+          if (child.classList.contains('reveal')) {
+            child.style.setProperty('--d', (i * 85) + 'ms');
+          }
+        });
+      });
+      var reveals = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      reveals.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
 
 </body>
 </html>
