@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>L'Aube d'Or — Black Clover RP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-dark: #7a5e1a;
+      --bg-deep: #080808;
+      --bg-dark: #0f0f0f;
+      --bg-card: #141414;
+      --bg-card2: #1a1a1a;
+      --text: #d4c8a8;
+      --text-muted: #7a7060;
+      --border: #2a2418;
+      --accent: #3a2e10;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text);
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ===== PARTICULES / FOND ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(8,8,8,0.92);
+      border-bottom: 1px solid var(--gold-dark);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-emblem {
+      font-size: 5rem;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 30px rgba(201,168,76,0.5));
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(201,168,76,0.4)); }
+      50%       { filter: drop-shadow(0 0 50px rgba(201,168,76,0.8)); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      color: var(--gold);
+      line-height: 1.1;
+      text-shadow: 0 0 60px rgba(201,168,76,0.3), 0 2px 4px rgba(0,0,0,0.8);
+      letter-spacing: 0.05em;
+    }
+
+    .hero-divider {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 2rem auto;
+    }
+
+    .hero-subtitle {
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-motto {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      border: 1px solid var(--gold-dark);
+      display: inline-block;
+      padding: 0.6rem 2rem;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+
+    .section-divider {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
+      margin: 1.5rem auto 0;
+    }
+
+    /* ===== SEPARATEUR SECTION ===== */
+    .sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold-dark), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:hover { border-color: var(--gold-dark); transform: translateY(-3px); }
+    .card:hover::before { opacity: 1; }
+
+    .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    .card-text { color: var(--text-muted); font-size: 0.95rem; }
+
+    /* ===== HIERARCHIE ===== */
+    .hierarchy {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .rank-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.75rem;
+      transition: border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rank-row::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+    }
+
+    .rank-1::after { background: var(--gold); }
+    .rank-2::after { background: #a0a0a0; }
+    .rank-3::after { background: #8b6914; }
+    .rank-4::after { background: var(--border); }
+    .rank-5::after { background: var(--border); }
+
+    .rank-row:hover { border-color: var(--gold-dark); }
+
+    .rank-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid;
+      white-space: nowrap;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .rank-1 .rank-badge { color: var(--gold); border-color: var(--gold-dark); background: rgba(201,168,76,0.08); }
+    .rank-2 .rank-badge { color: #c0c0c0; border-color: #555; background: rgba(180,180,180,0.06); }
+    .rank-3 .rank-badge { color: #c8a040; border-color: #6a4f10; background: rgba(139,105,20,0.08); }
+    .rank-4 .rank-badge { color: var(--text-muted); border-color: var(--border); }
+    .rank-5 .rank-badge { color: var(--text-muted); border-color: var(--border); }
+
+    .rank-info { flex: 1; }
+    .rank-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .rank-desc { font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+
+    .rank-holder {
+      font-size: 0.8rem;
+      color: var(--gold-dark);
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== MAGIE ===== */
+    .magic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .magic-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .magic-card:hover {
+      border-color: var(--gold-dark);
+      background: var(--accent);
+    }
+
+    .magic-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+    .magic-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.05em;
+    }
+    .magic-type { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+
+    /* ===== REGLES ===== */
+    .rules-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .rules-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .rule-num {
+      font-family: 'Cinzel', serif;
+      color: var(--gold-dark);
+      font-size: 0.85rem;
+      min-width: 1.5rem;
+      margin-top: 0.05rem;
+    }
+
+    /* ===== QUOTE ===== */
+    .quote-block {
+      border-left: 3px solid var(--gold-dark);
+      padding: 1.5rem 2rem;
+      background: var(--bg-card);
+      margin: 2rem 0;
+    }
+
+    blockquote {
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--gold-dark);
+      font-family: 'Cinzel', serif;
+      font-style: normal;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== RECRUTEMENT ===== */
+    .recruit-box {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-dark);
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .recruit-box::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border: 1px solid var(--border);
+      pointer-events: none;
+    }
+
+    .recruit-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .recruit-text { color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.5rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: var(--bg-deep);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    footer span { color: var(--gold-dark); }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-deep); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dark); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#accueil" class="nav-logo">✦ L'Aube d'Or</a>
+    <ul class="nav-links">
+      <li><a href="#compagnie">Compagnie</a></li>
+      <li><a href="#hierarchie">Hiérarchie</a></li>
+      <li><a href="#magie">Magie</a></li>
+      <li><a href="#regles">Règles</a></li>
+      <li><a href="#recrutement">Recrutement</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero" id="accueil">
+    <div class="hero-emblem">🌅</div>
+    <p class="hero-eyebrow">Compagnie Royale des Chevaliers Magiques</p>
+    <h1>L'Aube d'Or</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-subtitle">Gardiens de la noblesse. Porteurs de lumière dans les ténèbres. Serviteurs du Royaume de Clover.</p>
+    <span class="hero-motto">✦ Per Lucem Ad Gloriam ✦</span>
+  </div>
+
+  <!-- COMPAGNIE -->
+  <section id="compagnie">
+    <div class="section-header">
+      <p class="section-label">À propos</p>
+      <h2 class="section-title">La Compagnie</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="quote-block">
+      <blockquote>
+        « Seuls les plus brillants peuvent prétendre porter l'emblème de l'aube. Non par la naissance, mais par la lumière que chacun porte en soi. »
+        <cite>— Capitaine de l'Aube d'Or</cite>
+      </blockquote>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">⚜️</div>
+        <div class="card-title">Notre Mission</div>
+        <div class="card-text">Protéger le Royaume de Clover, servir la famille royale et maintenir la paix au sein du territoire. L'Aube d'Or représente l'excellence magique et la discipline absolue.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌟</div>
+        <div class="card-title">Nos Valeurs</div>
+        <div class="card-text">Excellence, honneur, loyauté. Chaque membre de l'Aube d'Or s'engage à repousser ses limites et à porter haut les couleurs de la compagnie dans chaque mission.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏰</div>
+        <div class="card-title">Notre Base</div>
+        <div class="card-text">Le quartier général de l'Aube d'Or se situe dans la haute noblesse du Royaume. Seuls les membres accrédités peuvent en franchir les portes.</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep"/>
+
+  <!-- HIERARCHIE -->
+  <section id="hierarchie">
+    <div class="section-header">
+      <p class="section-label">Organisation</p>
+      <h2 class="section-title">Hiérarchie</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="hierarchy">
+
+      <div class="rank-row rank-1">
+        <span class="rank-badge">Capitaine</span>
+        <div class="rank-info">
+          <div class="rank-name">Capitaine de l'Aube d'Or</div>
+          <div class="rank-desc">Chef absolu de la compagnie. Autorité suprême sur toutes les décisions.</div>
+        </div>
+        <span class="rank-holder">Vacant</span>
+      </div>
+
+      <div class="rank-row rank-2">
+        <span class="rank-badge">Vice-Capitaine</span>
+        <div class="rank-info">
+          <div class="rank-name">Vice-Capitaine</div>
+          <div class="rank-desc">Second de la compagnie. Commande en l'absence du Capitaine.</div>
+        </div>
+        <span class="rank-holder">Vacant</span>
+      </div>
+
+      <div class="rank-row rank-3">
+        <span class="rank-badge">Chevalier d'Or</span>
+        <div class="rank-info">
+          <div class="rank-name">Chevalier d'Or</div>
+          <div class="rank-desc">Élite de la compagnie. Membres expérimentés aux capacités éprouvées au combat.</div>
+        </div>
+        <span class="rank-holder">—</span>
+      </div>
+
+      <div class="rank-row rank-4">
+        <span class="rank-badge">Chevalier</span>
+        <div class="rank-info">
+          <div class="rank-name">Chevalier Magique</div>
+          <div class="rank-desc">Membre confirmé, ayant prouvé sa valeur lors de missions officielles.</div>
+        </div>
+        <span class="rank-holder">—</span>
+      </div>
+
+      <div class="rank-row rank-4">
+        <span class="rank-badge">Aspirant</span>
+        <div class="rank-info">
+          <div class="rank-name">Aspirant Chevalier</div>
+          <div class="rank-desc">Nouveau membre en période d'essai. Doit faire ses preuves pour être promu.</div>
+        </div>
+        <span class="rank-holder">—</span>
+      </div>
+
+      <div class="rank-row rank-5">
+        <span class="rank-badge">Recrue</span>
+        <div class="rank-info">
+          <div class="rank-name">Recrue</div>
+          <div class="rank-desc">Tout juste admis. Doit suivre la formation initiale de la compagnie.</div>
+        </div>
+        <span class="rank-holder">—</span>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="sep"/>
+
+  <!-- MAGIE -->
+  <section id="magie">
+    <div class="section-header">
+      <p class="section-label">Pouvoirs</p>
+      <h2 class="section-title">Magie de la Compagnie</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <p style="text-align:center; color: var(--text-muted); margin-bottom: 2.5rem; font-style: italic;">
+      Les membres de l'Aube d'Or maîtrisent des magies diverses, mais l'excellence reste le critère premier d'admission.
+    </p>
+
+    <div class="magic-grid">
+      <div class="magic-card">
+        <div class="magic-icon">🌿</div>
+        <div class="magic-name">Magie Végétale</div>
+        <div class="magic-type">Création & Contrôle</div>
+      </div>
+      <div class="magic-card">
+        <div class="magic-icon">🌊</div>
+        <div class="magic-name">Magie de l'Eau</div>
+        <div class="magic-type">Contrôle & Guérison</div>
+      </div>
+      <div class="magic-card">
+        <div class="magic-icon">⚡</div>
+        <div class="magic-name">Magie de la Foudre</div>
+        <div class="magic-type">Attaque & Vitesse</div>
+      </div>
+      <div class="magic-card">
+        <div class="magic-icon">🔥</div>
+        <div class="magic-name">Magie du Feu</div>
+        <div class="magic-type">Destruction & Puissance</div>
+      </div>
+      <div class="magic-card">
+        <div class="magic-icon">🌬️</div>
+        <div class="magic-name">Magie du Vent</div>
+        <div class="magic-type">Mobilité & Support</div>
+      </div>
+      <div class="magic-card">
+        <div class="magic-icon">✨</div>
+        <div class="magic-name">Magie de Lumière</div>
+        <div class="magic-type">Vitesse Absolue</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep"/>
+
+  <!-- REGLES -->
+  <section id="regles">
+    <div class="section-header">
+      <p class="section-label">Code d'honneur</p>
+      <h2 class="section-title">Règles de la Compagnie</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <ul class="rules-list">
+      <li><span class="rule-num">I.</span> Respecter la hiérarchie en toutes circonstances. Les ordres du Capitaine et du Vice-Capitaine sont loi.</li>
+      <li><span class="rule-num">II.</span> Faire preuve d'honneur et de loyauté envers le Royaume de Clover et ses habitants.</li>
+      <li><span class="rule-num">III.</span> Ne jamais utiliser sa magie contre un civil innocent ou un autre chevalier de la compagnie sans raison valable.</li>
+      <li><span class="rule-num">IV.</span> Participer aux missions assignées par la compagnie et signaler tout abandon.</li>
+      <li><span class="rule-num">V.</span> Maintenir la confidentialité des informations sensibles liées aux opérations de la compagnie.</li>
+      <li><span class="rule-num">VI.</span> Toute trahison envers la compagnie ou le Royaume sera sanctionnée par l'exclusion définitive.</li>
+      <li><span class="rule-num">VII.</span> Le respect entre membres est obligatoire, quelle que soit la différence de rang.</li>
+    </ul>
+  </section>
+
+  <hr class="sep"/>
+
+  <!-- RECRUTEMENT -->
+  <section id="recrutement">
+    <div class="section-header">
+      <p class="section-label">Rejoindre</p>
+      <h2 class="section-title">Recrutement</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="recruit-box">
+      <div class="recruit-title">Prêt à rejoindre l'Aube d'Or ?</div>
+      <p class="recruit-text">
+        L'Aube d'Or recrute les mages les plus prometteurs du Royaume. Si tu portes en toi la flamme de l'excellence et la volonté de servir, les portes de la compagnie te sont ouvertes.
+      </p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="#" class="btn">Faire une candidature</a>
+        <a href="#" class="btn" style="border-color:var(--gold-dark); color:var(--text-muted);">Contacter un officier</a>
+      </div>
+      <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+        Critères : activité, esprit RP, maîtrise de la magie, respect du code d'honneur.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>✦ <span>L'Aube d'Or</span> — Compagnie des Chevaliers Magiques ✦</p>
+    <p style="margin-top:0.5rem;">Black Clover RP &nbsp;|&nbsp; Serveur privé</p>
+  </footer>
+
+</body>
+</html>
